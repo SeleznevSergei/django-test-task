@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import Country, Manufacturer, Car, Comment
-import requests
 
 
 class CountrySerializer(serializers.ModelSerializer):
@@ -12,10 +11,8 @@ class CountrySerializer(serializers.ModelSerializer):
 
 
 class CarSerializer(serializers.ModelSerializer):
-    # manufacturer = serializers.StringRelatedField(read_only=True)
     manufacturer = serializers.SlugRelatedField(queryset=Manufacturer.objects.all(), slug_field='name')
     comments = serializers.StringRelatedField(many=True, read_only=True)
-    # comments = CommentSerializer(many=True, read_only=True)
     comments_count = serializers.SerializerMethodField()
 
     class Meta:
@@ -38,9 +35,7 @@ class CarSerializerComment(serializers.ModelSerializer):
 
 
 class ManufacturerSerializer(serializers.ModelSerializer):
-    # country = serializers.StringRelatedField(read_only=True)
     country = serializers.SlugRelatedField(queryset=Country.objects.all(), slug_field='name')
-    # cars = serializers.StringRelatedField(many=True, read_only=True)
     cars = CarSerializerComment(many=True, read_only=True)
 
     class Meta:

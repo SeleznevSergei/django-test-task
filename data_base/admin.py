@@ -17,4 +17,22 @@ class CarResource(resources.ModelResource):
         model = Car
         fields = ['name', 'manufacturer__name', 'manufacturer__country__name']
 
+class CountryResource(resources.ModelResource):
+
+    class Meta:
+        model = Country
+        fields = ['name']
+
+class ManufacturerResource(resources.ModelResource):
+
+    class Meta:
+        model = Manufacturer
+        fields = ['name', 'country__name']
+
+class CommentResource(resources.ModelResource):
+
+    class Meta:
+        model = Comment
+        fields = ['e_mail', 'car__name', 'time_created', 'time_updated', 'comment']
+
 
