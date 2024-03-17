@@ -31,11 +31,12 @@ def index(request):
 def page_not_found(request, exception):
     return HttpResponseNotFound("<h1>Page not found</h1>")
 
+
 class ExportMixinView(ModelViewSet):
     resource = resources.ModelResource
 
     def list(self, request, *args, **kwargs):
-        param = request.GET.get('parametr', None)
+        param = request.GET.get('file', None)
         if param is not None:
             return self.get_file(param)
         return super(ExportMixinView, self).list(request, *args, **kwargs)
@@ -53,44 +54,17 @@ class ExportMixinView(ModelViewSet):
         return response
 
 
-
-#class CountryList(generics.ListCreateAPIView):
-    #queryset = Country.objects.all()
-    #serializer_class = CountrySerializer
-
-
-#class CountryDetail(generics.RetrieveUpdateDestroyAPIView):
-    #queryset = Country.objects.all()
-    #serializer_class = CountrySerializer
-
 class CountryModelViewSet(ExportMixinView, ModelViewSet):
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
     resource = CountryResource()
 
 
-#class ManufacturerList(generics.ListCreateAPIView):
-    #queryset = Manufacturer.objects.all()
-    #serializer_class = ManufacturerSerializer
-
-
-#class ManufacturerDetail(generics.RetrieveUpdateDestroyAPIView):
-    #queryset = Manufacturer.objects.all()
-    #serializer_class = ManufacturerSerializer
-
-class ManufacturerModelViewSet(ModelViewSet):
+class ManufacturerModelViewSet(ExportMixinView, ModelViewSet):
     queryset = Manufacturer.objects.all()
     serializer_class = ManufacturerSerializer
+    resource = ManufacturerResource()
 
-
-#class CarsList(generics.ListCreateAPIView):
-    #queryset = Car.objects.all()
-    #serializer_class = CarSerializer
-
-
-#class CarsDetail(generics.RetrieveUpdateDestroyAPIView):
-    #queryset = Car.objects.all()
-    #serializer_class = CarSerializer
 
 class CarModelViewSet(ExportMixinView, ModelViewSet):
     queryset = Car.objects.all()
@@ -98,20 +72,10 @@ class CarModelViewSet(ExportMixinView, ModelViewSet):
     resource = CarResource()
 
 
-#class CommentList(generics.ListCreateAPIView):
-    #queryset = Comment.objects.all()
-    #serializer_class = CommentSerializer
-    #permission_classes = (permissions.AllowAny,)
-
-
-#class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
-    #queryset = Comment.objects.all()
-    #serializer_class = CommentSerializer
-
-
-class CommentModelViewSet(ModelViewSet):
+class CommentModelViewSet(ExportMixinView, ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+    resource = CommentResource()
 
     def get_permissions(self):
         if not self.detail:
