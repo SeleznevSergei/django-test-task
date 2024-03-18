@@ -10,20 +10,6 @@ from .models import Country, Manufacturer, Car, Comment
 from .serializers import CountrySerializer, ManufacturerSerializer, CarSerializer, CommentSerializer
 
 
-# def export_data(request):
-#     car_resource = CarResource()
-#     data = car_resource.export()
-#     param = request.GET.get('format')
-#     response = HttpResponse(data.json, content_type='application/json')
-#     if param == 'csv':
-#         response = HttpResponse(data.csv, content_type='text/csv')
-#         response['Content-Disposition'] = 'attachment; filename="data_base.csv"'
-#     if param == 'xls':
-#         response = HttpResponse(data.xls, content_type='application/vnd.ms-excel')
-#         response['Content-Disposition'] = 'attachment; filename="data_base.xls"'
-#     return response
-
-
 def index(request):
     return HttpResponse("<h1>Home page</h1>")
 
